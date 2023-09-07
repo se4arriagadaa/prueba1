@@ -8,6 +8,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class RecoveryPage implements OnInit {
   email: string = '';
+  isProcessing: boolean = false;
   constructor(private toastController: ToastController) { }
 
   enviarSolicitud() {
