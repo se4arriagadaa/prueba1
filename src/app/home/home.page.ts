@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  constructor() {}
-
+  nombreUsuario: string = '';
+  
+  constructor(private activatedRoute: ActivatedRoute) {
+  this.activatedRoute.queryParams.subscribe(params => {
+    if (params && params['value']) {
+      this.nombreUsuario = params['value'];
+    };
+  });
 }
+}
+
