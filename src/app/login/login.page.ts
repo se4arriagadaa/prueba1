@@ -42,4 +42,8 @@ export class LoginPage {
     });
   }
 
+  recovery() {
+    this.navCtrl.navigateForward('/recovery')
+  }
+
 }

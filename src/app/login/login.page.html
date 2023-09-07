@@ -21,7 +21,10 @@
           placeholder="Ingrese usuario" maxlength="8" minlength="3"></ion-input>
         <ion-input label="Password" [(ngModel)]="pass" (input)="validacion2()" labelPlacement="stacked"
           placeholder="Ingrese contraseña" type="Password" maxlength="4" minlength="4"></ion-input>
-        <ion-button color="tertiary" [disabled]="bloquearBtn()" expand="block"
+          <div class="ir_recovery">
+            <a (click)="recovery()">¿Olvidaste tu contraseña?</a>
+          </div>
+          <ion-button color="tertiary" [disabled]="bloquearBtn()" expand="block"
           (click)="Ingresar()">Ingresar</ion-button>
       </ion-card-content>
     </ion-card>
