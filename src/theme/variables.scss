@@ -268,4 +268,17 @@ $app-theme: mat.define-light-theme((
 
     --ion-card-background: #1e1e1e;
   }
+
+    
+  .rounded-button {
+    width: 150px; 
+    height: 50px; 
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+    border-radius: 40px; 
+    background-color: #007bff; 
+    color: #fff; 
+  }
+
 }

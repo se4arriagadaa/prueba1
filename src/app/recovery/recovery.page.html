@@ -15,8 +15,12 @@
         <ion-input type="email" [(ngModel)]="email"></ion-input>
       </ion-item>
     </ion-card-content>
+    <ion-button class="rounded-button" (click)="enviarSolicitud()" >Enviar Solicitud</ion-button>
+    <ion-router-link [routerLink]="'login'">Volver al Login</ion-router-link>
+
+
   </ion-card>
 
-  <ion-button expand="full" color="primary" (click)="enviarSolicitud()">Enviar Solicitud</ion-button>
+
 </ion-content>
 

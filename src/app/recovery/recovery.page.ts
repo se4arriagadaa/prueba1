@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./recovery.page.scss'],
 })
 export class RecoveryPage implements OnInit {
+  loginRoute: string = 'login';
   email: string = '';
   isProcessing: boolean = false;
   constructor(private toastController: ToastController) { }
