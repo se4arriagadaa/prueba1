@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recovery',
@@ -10,7 +11,7 @@ export class RecoveryPage implements OnInit {
   loginRoute: string = 'login';
   email: string = '';
   isProcessing: boolean = false;
-  constructor(private toastController: ToastController) { }
+  constructor(private toastController: ToastController, private navCtrl: NavController) { }
 
   enviarSolicitud() {
     if(this.validarEmail(this.email)) {
@@ -38,6 +39,10 @@ export class RecoveryPage implements OnInit {
   }
   
   ngOnInit() {
+  }
+
+  login() {
+    this.navCtrl.navigateForward('/login')
   }
 
 }
