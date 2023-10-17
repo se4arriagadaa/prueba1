@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,43 +8,46 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-  usuario: string = '';
-  pass: string = '';
+  hide = true;
+  user = {
+    usuario: '', //revisar html routing
+    pass: ''
+  }
   mensaje: string = '';
 
-  validacion1() {
-    if (this.usuario.length < 3) {
-      this.mensaje = 'Debes tener entre 3 y 8 caracteres';
-    } else {
-      this.mensaje = '';
-    }
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  validacion2() {
-    if (this.pass.length < 3) {
-      this.mensaje = 'Deben ser 4 caracteres';
+
+  Ingresar() {
+    const { usuario, pass } = this.user;
+    if (this.authService.validarCredentials(usuario, pass)) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          user: this.user
+        }
+      };
+      this.router.navigate(['/home'], navigationExtras);
     } else {
-      this.mensaje = '';
+      // Si la autenticación falla, puedes mostrar un mensaje de error.
+      console.log('Error: Credenciales inválidas');
     }
   }
 
   bloquearBtn(): boolean {
-    return this.usuario.length < 3 || this.pass.length != 4;
+    return this.user.usuario.length < 3 || this.user.pass.length != 4;
   }
 
-
-
-  constructor(private navCtrl: NavController) { }
-  Ingresar() {
-    this.navCtrl.navigateForward('/home', {
-      queryParams: {
-        value: this.usuario,
-      },
-    });
+  IrAlHome () {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: this.user
+      }
+    }
+    this.router.navigate(['/home'], navigationExtras)
   }
-
+  
   recovery() {
-    this.navCtrl.navigateForward('/recovery')
+    this.router.navigate(['/recovery'])
   }
 
 }
