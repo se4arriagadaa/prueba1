@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../auth.service';
-
+import { UserService } from '../user.service';
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
@@ -28,7 +28,6 @@ export class LoginPage {
       };
       this.router.navigate(['/home'], navigationExtras);
     } else {
-      // Si la autenticación falla, puedes mostrar un mensaje de error.
       console.log('Error: Credenciales inválidas');
     }
   }
@@ -49,5 +48,24 @@ export class LoginPage {
   recovery() {
     this.router.navigate(['/recovery'])
   }
+
+  validarUsername(username: string): string | null {
+    if (username.length < 3 || username.length > 8) {
+      return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+    }
+    return null; 
+  }
+
+  validarPassword(password: string): string | null {
+    if (password.length !== 4) {
+      return 'La contraseña debe tener 4 caracteres.';
+    }
+    return null; 
+  }
+
+  login()
+    {
+
+    }
 
 }
