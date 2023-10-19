@@ -16,10 +16,8 @@ export class ApiService {
   
   constructor(private http: HttpClient) { }
 
-  getUsuario(id: any): Observable<any> {
-    return this.http.get(this.apiUrl + "/posts/" + id).pipe(
-      retry(3)
-    )
+  getUsuario(): Observable<any> {
+    return this.http.get(this.apiUrl + "/listarUsuarios").pipe(retry(3))
   }
   /*
   getUsuario() {

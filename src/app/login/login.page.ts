@@ -5,44 +5,32 @@ import { User } from '../user.model';
 
 @Component({
   selector: 'app-login',
-  template: `
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <form (ngSubmit)="login()">
-      <label for="username">Usuario:</label>
-      <input type="text" id="username" [(ngModel)]="user.username" required><br>
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" [(ngModel)]="user.password" required><br>
-      <button type="submit">Iniciar Sesión</button>
-    </form>
-  `,
-  styles: [`
-    .error-message {
-      color: red;
-    }
-  `]
+  templateUrl: './login.page.html',
+  styles: ['./login.page.scss']
 })
-export class LoginPage {
+
+export class LoginPage implements OnInit {
+  
   hide = true;
   private isLoggedIn: boolean = false;
   user: User = { username: '', password: ''};
   errorMessage: string = '';
   
-  constructor(
-    private apiService: ApiService, private router: Router) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
-    login() {
-      this.apiService.getUsuario("nombre_usuario").subscribe(
-        (response) => {
-          // Verificar la respuesta del servidor y manejarla adecuadamente
-          console.log('Respuesta del servidor:', response);
-          // Tu lógica de manejo de respuesta aquí
-        },
-        (error) => {
-          this.errorMessage = 'Error al iniciar sesión. Por favor, inténtalo de nuevo.';
-          console.error('Error en la solicitud:', error);
-        }
-      );
-    }
+    // login() {
+    //   this.apiService.getUsuario("nombre_usuario").subscribe(
+    //     (response) => {
+    //       // Verificar la respuesta del servidor y manejarla adecuadamente
+    //       console.log('Respuesta del servidor:', response);
+    //       // Tu lógica de manejo de respuesta aquí
+    //     },
+    //     (error) => {
+    //       this.errorMessage = 'Error al iniciar sesión. Por favor, inténtalo de nuevo.';
+    //       console.error('Error en la solicitud:', error);
+    //     }
+    //   );
+    // }
 
  /* Ingresar() {
     const { usuario, pass } = this.user;
@@ -106,4 +94,7 @@ export class LoginPage {
         console.log(error);
       });
     }*/
+    ngOnInit() {
+    }
+  
 }
