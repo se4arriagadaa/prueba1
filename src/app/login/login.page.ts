@@ -1,26 +1,52 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { UserService } from '../user.service';
+import { ApiService } from '../api.service';
+import { User } from '../user.model';
+
 @Component({
   selector: 'app-login',
-  templateUrl: 'login.page.html',
-  styleUrls: ['login.page.scss'],
+  template: `
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <form (ngSubmit)="login()">
+      <label for="username">Usuario:</label>
+      <input type="text" id="username" [(ngModel)]="user.username" required><br>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" required><br>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+  `,
+  styles: [`
+    .error-message {
+      color: red;
+    }
+  `]
 })
 export class LoginPage {
   hide = true;
-  user = {
-    usuario: '', //revisar html routing
-    pass: ''
-  }
-  mensaje: string = '';
+  private isLoggedIn: boolean = false;
+  user: User = { username: '', password: ''};
+  errorMessage: string = '';
+  
+  constructor(
+    private apiService: ApiService, private router: Router) {}
 
-  constructor(private authService: AuthService, private router: Router) {}
+    login() {
+      this.apiService.getUsuario("nombre_usuario").subscribe(
+        (response) => {
+          // Verificar la respuesta del servidor y manejarla adecuadamente
+          console.log('Respuesta del servidor:', response);
+          // Tu lógica de manejo de respuesta aquí
+        },
+        (error) => {
+          this.errorMessage = 'Error al iniciar sesión. Por favor, inténtalo de nuevo.';
+          console.error('Error en la solicitud:', error);
+        }
+      );
+    }
 
-
-  Ingresar() {
+ /* Ingresar() {
     const { usuario, pass } = this.user;
-    if (this.authService.validarCredentials(usuario, pass)) {
+    if (this.validarCredentials(usuario, pass)) {
       let navigationExtras: NavigationExtras = {
         state: {
           user: this.user
@@ -31,9 +57,9 @@ export class LoginPage {
       console.log('Error: Credenciales inválidas');
     }
   }
-
+*/
   bloquearBtn(): boolean {
-    return this.user.usuario.length < 3 || this.user.pass.length != 4;
+    return this.user.username.length < 3 || this.user.password.length != 4;
   }
 
   IrAlHome () {
@@ -49,23 +75,35 @@ export class LoginPage {
     this.router.navigate(['/recovery'])
   }
 
-  validarUsername(username: string): string | null {
-    if (username.length < 3 || username.length > 8) {
+  validarUsername(user: string): string | null {
+    if (user.length < 3 || user.length > 8) {
       return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
     }
     return null; 
   }
 
-  validarPassword(password: string): string | null {
-    if (password.length !== 4) {
+  validarPassword(pass: string): string | null {
+    if (pass.length !== 4) {
       return 'La contraseña debe tener 4 caracteres.';
     }
     return null; 
   }
 
-  login()
-    {
-
-    }
-
+  /*validarCredentials(username: string, password: string){
+    this.apiService.getUsuario().subscribe(
+      (usuarios)=> {
+        const usuarioEncontrado = usuarios.find((usuario) => usuario.username === username && usuario.password === password);
+      
+        if (usuarioEncontrado) {
+          // Usuario encontrado, redirigir a la página de inicio
+          this.router.navigate(['/inicio']);
+        } else {
+          // Usuario no encontrado, mostrar un mensaje de error o realizar la acción correspondiente
+          console.log("Usuario no encontrado");
+        }
+      },
+      (error: any) => {
+        console.log(error);
+      });
+    }*/
 }

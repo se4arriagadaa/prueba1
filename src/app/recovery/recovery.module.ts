@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { RecoveryPageRoutingModule } from './recovery-routing.module';
-
 import { RecoveryPage } from './recovery.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { RecoveryPage } from './recovery.page';
     IonicModule,
     RecoveryPageRoutingModule
   ],
-  declarations: [RecoveryPage]
+  declarations: [RecoveryPage],
 })
 export class RecoveryPageModule {}

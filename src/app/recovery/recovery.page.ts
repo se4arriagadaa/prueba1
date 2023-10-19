@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { UserService } from '../user.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-recovery',
@@ -12,17 +12,17 @@ export class RecoveryPage implements OnInit {
   loginRoute: string = 'login';
   email: string = '';
   isProcessing: boolean = false;
-  
+  user: User = { username: '', password: ''};
+
   constructor(
     private toastController: ToastController, 
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService 
     ) {
       this.route.queryParams.subscribe(params => {
         const navigationExtras = this.router.getCurrentNavigation()?.extras;
     if (navigationExtras && navigationExtras.state && 'user' in navigationExtras.state) {
-      this.userService.user = navigationExtras.state['user'];
+      this.user = navigationExtras.state['user'];
         }
       }); 
    } 
