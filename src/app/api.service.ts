@@ -18,13 +18,7 @@ export class ApiService {
   
   constructor(private http: HttpClient) { }
 
-  getUsuario(): Observable<any> {
-    return this.http.get(this.apiUrl + "/listarUsuarios").pipe(retry(3))
+  buscarUsuario(nombreUsuario: string, password: string): Observable<any> {
+    return this.http.get(this.apiUrl + "/buscarUsuario" + '?nombre_usuario=' + nombreUsuario + '&password=' + password).pipe(retry(3))
   }
-  /*
-  getUsuario() {
-    return this.http.get(this.apiUrl+'/listarUsuarios').pipe(
-      retry(3)
-    );
-  }*/
 }

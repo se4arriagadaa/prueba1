@@ -16,14 +16,14 @@
       </ion-card-header>
 
       <ion-card-content>
-        <ion-input label="Usuario" labelPlacement="stacked"
-          placeholder="Ingrese usuario" maxlength="8" minlength="3"></ion-input>
-        <ion-input label="Password" labelPlacement="stacked"
-          placeholder="Ingrese contraseña" type="Password" maxlength="4" minlength="4"></ion-input>
+        <ion-input label="nombreUsuario" labelPlacement="stacked"
+          placeholder="Ingrese usuario" maxlength="8" minlength="3" [(ngModel)]="nombreUsuario.texto"></ion-input>
+        <ion-input label="password" labelPlacement="stacked"
+          placeholder="Ingrese contraseña" type="Password" maxlength="4" minlength="4" [(ngModel)]="password.texto"></ion-input>
         <div class="ir_recovery">
           <a (click)="recovery()">¿Olvidaste tu contraseña?</a>
         </div>
-        <ion-button class="rounded-button" color="tertiary" [disabled]="bloquearBtn()">Ingresar</ion-button>
+        <ion-button class="rounded-button" color="tertiary" (click)="validarUsuario()">Ingresar</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

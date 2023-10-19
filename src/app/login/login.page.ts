@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ApiService } from '../api.service';
-import { User } from '../user.model';
+
 
 @Component({
   selector: 'app-login',
@@ -11,26 +11,36 @@ import { User } from '../user.model';
 
 export class LoginPage implements OnInit {
 
-  nombreUsuario: string = '';
+  usuario: any;
+  nombreUsuario = {
+    texto:''
+  }
+  password = {
+    texto:''
+  }
 
-  hide = true;
-  private isLoggedIn: boolean = false;
-  user: User = { username: '', password: '' };
-  errorMessage: string = '';
+  constructor(private api: ApiService, private router: Router) { }
 
-  constructor(private apiService: ApiService, private router: Router) { }
-
-  bloquearBtn(): boolean {
-    return this.user.username.length < 3 || this.user.password.length != 4;
+  validarUsuario(){
+    this.api.buscarUsuario(this.nombreUsuario.texto, this.password.texto).subscribe(
+      (resultado)=>{
+        console.log(resultado);
+        if (resultado){
+          this.IrAlHome()
+        };  
+      },
+      (error)=>{
+        console.log(error);
+      });  
   }
 
   IrAlHome() {
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.user
+        nombreUsuario: this.nombreUsuario.texto
       }
     }
-    this.router.navigate(['/home'], navigationExtras)
+    this.router.navigate(['/home'], navigationExtras);
   }
 
   recovery() {
@@ -50,6 +60,7 @@ export class LoginPage implements OnInit {
     }
     return null;
   }
+
   ngOnInit() {
   }
 
