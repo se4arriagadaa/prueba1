@@ -22,7 +22,7 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private storage: Storage
-  ) { }
+  ) { this.cargarDatosGuardados();}
 
 
   Ingresar() {
@@ -74,18 +74,15 @@ export class LoginPage {
 
   }
 
-  // Guardar datos en el localStorage
-  async guardarDatosUsuario(nombreUsuario: string, password: string) {
-    await this.storage.set('nombreUsuario', nombreUsuario);
-    await this.storage.set('password', password);
+  async cargarDatosGuardados() {
+    const nombreUsuario = await this.storage.get('user.usuario');
+    const password = await this.storage.get('user.pass');
+
+    if (nombreUsuario) {
+      this.user.usuario = nombreUsuario;
+    }
+    if (password) {
+      this.user.pass = password;
+    }
   }
-
-  // Recuperar datos del localStorage
-  async obtenerDatosUsuario() {
-    const nombreUsuario = await this.storage.get('nombreUsuario');
-    const password = await this.storage.get('password');
-    return { nombreUsuario, password };
-  }
-
-
 }
