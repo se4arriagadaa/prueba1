@@ -11,39 +11,17 @@ import { ApiService } from '../api.service';
 
 export class LoginPage implements OnInit {
 
-  usuario: any;
-  nombreUsuario = {
-    texto:''
-  }
-  password = {
-    texto:''
-  }
-
-<<<<<<< Updated upstream
-  constructor(private api: ApiService, private router: Router) { }
-
-  validarUsuario(){
-    this.api.buscarUsuario(this.nombreUsuario.texto, this.password.texto).subscribe(
-      (resultado)=>{
-        console.log(resultado);
-        if (resultado){
-          this.IrAlHome()
-        };  
-      },
-      (error)=>{
-        console.log(error);
-      });  
-=======
   hide = true;
   private isLoggedIn: boolean = false;
-  user: User = { username: '', password: ''};
+  usuario = { texto: ''};
+  password = { texto: ''};
+
   mostrarMensaje: boolean = false;
-  mensaje: string = '';
 
   constructor(private apiService: ApiService, private router: Router) { }
-
+  
   login() {
-    this.apiService.getUsuario().subscribe(
+    this.apiService.buscarUsuario(this.usuario.texto, this.password.texto).subscribe(
     (response) => {
       if (this.verificarCredenciales(response)) {
         const navigationExtras: NavigationExtras = {
@@ -63,19 +41,18 @@ export class LoginPage implements OnInit {
   }
 
   verificarCredenciales(response: any): boolean {
-    return response.User === this.user.username && response.password === this.user.password;
+    return response.User === this.usuario.texto && response.password === this.password.texto;
     return true; 
   }
 
   bloquearBtn(): boolean {
-    return this.user.username.length < 3 || this.user.password.length != 4;
->>>>>>> Stashed changes
+    return this.usuario.texto.length < 3 || this.password.texto.length != 4;
   }
 
   IrAlHome() {
     let navigationExtras: NavigationExtras = {
       state: {
-        nombreUsuario: this.nombreUsuario.texto
+        nombreUsuario: this.usuario.texto
       }
     }
     this.router.navigate(['/home'], navigationExtras);
