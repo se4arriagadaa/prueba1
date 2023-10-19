@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
     texto:''
   }
 
+<<<<<<< Updated upstream
   constructor(private api: ApiService, private router: Router) { }
 
   validarUsuario(){
@@ -32,6 +33,43 @@ export class LoginPage implements OnInit {
       (error)=>{
         console.log(error);
       });  
+=======
+  hide = true;
+  private isLoggedIn: boolean = false;
+  user: User = { username: '', password: ''};
+  mostrarMensaje: boolean = false;
+  mensaje: string = '';
+
+  constructor(private apiService: ApiService, private router: Router) { }
+
+  login() {
+    this.apiService.getUsuario().subscribe(
+    (response) => {
+      if (this.verificarCredenciales(response)) {
+        const navigationExtras: NavigationExtras = {
+          state: {
+            mensaje: '¡Bienvenido! Has iniciado sesion correctamente.'
+          }
+        };
+        this.router.navigate(['/home'], navigationExtras);
+      } else {
+        console.log('Nombre o contraseña incorrecto.')
+      }
+    },
+    (error) => {
+      console.error('Error en la solicitud:', error);
+    }
+    );
+  }
+
+  verificarCredenciales(response: any): boolean {
+    return response.User === this.user.username && response.password === this.user.password;
+    return true; 
+  }
+
+  bloquearBtn(): boolean {
+    return this.user.username.length < 3 || this.user.password.length != 4;
+>>>>>>> Stashed changes
   }
 
   IrAlHome() {

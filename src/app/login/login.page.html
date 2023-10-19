@@ -16,6 +16,7 @@
       </ion-card-header>
 
       <ion-card-content>
+<<<<<<< Updated upstream
         <ion-input label="nombreUsuario" labelPlacement="stacked"
           placeholder="Ingrese usuario" maxlength="8" minlength="3" [(ngModel)]="nombreUsuario.texto"></ion-input>
         <ion-input label="password" labelPlacement="stacked"
@@ -24,6 +25,20 @@
           <a (click)="recovery()">¿Olvidaste tu contraseña?</a>
         </div>
         <ion-button class="rounded-button" color="tertiary" (click)="validarUsuario()">Ingresar</ion-button>
+=======
+        <ion-input [(ngModel)]="user.username" label="Usuario" labelPlacement="stacked"
+          placeholder="Ingrese usuario" maxlength="8" minlength="3"></ion-input>
+        <ion-input [(ngModel)]="user.password" label="Password" labelPlacement="stacked"
+          placeholder="Ingrese contraseña" type="password" maxlength="4" minlength="4"></ion-input>
+        <div class="ir_recovery">
+          <a (click)="recovery()">¿Olvidaste tu contraseña?</a>
+        </div>
+        <ion-button class="rounded-button" color="tertiary" (click)="login()" [disabled]="bloquearBtn()">Ingresar</ion-button>
+      </ion-card-content>
+      <!--mensaje error-->
+      <ion-card-content *ngIf="mostrarMensaje">
+        <ion-label>{{ mensaje }}</ion-label>
+>>>>>>> Stashed changes
       </ion-card-content>
     </ion-card>
   </div>
