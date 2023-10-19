@@ -5,6 +5,7 @@ import { Observable, retry } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
   httpOptions = {
     headers: new HttpHeaders({
@@ -12,6 +13,7 @@ export class ApiService {
       'Access-Control-Allow-Origin': '*'
     })
   }
+  
   apiUrl = 'http://localhost:3000/api';
   
   constructor(private http: HttpClient) { }
