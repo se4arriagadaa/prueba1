@@ -6,21 +6,25 @@
 
 <ion-content [fullscreen]="true" class="contenido" color="primary">
   <div id="container">
-
     <ion-card>
       <ion-card-header>
         <ion-card-title>
-          Ingresa tu email
+          Ingresa tu nombre de usuario
         </ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-input label="Email" labelPlacement="floating" type="email" [(ngModel)]="email"></ion-input>
+        <ion-input label="Usuario" labelPlacement="floating" [(ngModel)]="nomUsuario.texto"></ion-input>
         <ion-button class="rounded-button" (click)="enviarSolicitud()">Enviar Solicitud</ion-button>
         <div class="ir_login">
-          <a (click)="login()">Regresar al login</a>
+          <ion-button class="rounded-button"><a (click)="login()">Regresar al login</a></ion-button>
         </div>
+
+        <!-- Mostrar el mensaje -->
+        <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+
+        <!-- Aquí agregamos el spinner de Angular Material -->
+        <mat-spinner *ngIf="showSpinner"></mat-spinner>
       </ion-card-content>
     </ion-card>
   </div>
-
 </ion-content>

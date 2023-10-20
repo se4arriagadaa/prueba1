@@ -21,4 +21,8 @@ export class ApiService {
   buscarUsuario(nombreUsuario: string, password: string): Observable<any> {
     return this.http.get(this.apiUrl + "/buscarUsuario" + '?nombre_usuario=' + nombreUsuario + '&password=' + password).pipe(retry(3))
   }
+
+  recovery(nombreUsuario: string): Observable<any> {
+    return this.http.get(this.apiUrl + "/recovery" + '?nombre_usuario=' + nombreUsuario).pipe(retry(3))
+  }
 }

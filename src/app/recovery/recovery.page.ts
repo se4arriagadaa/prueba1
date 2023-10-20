@@ -1,62 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { User } from '../user.model';
+import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-recovery',
   templateUrl: './recovery.page.html',
   styleUrls: ['./recovery.page.scss'],
 })
-export class RecoveryPage implements OnInit {
-  loginRoute: string = 'login';
-  email: string = '';
-  isProcessing: boolean = false;
-  user: User = { username: '', password: ''};
 
-  constructor(
-    private toastController: ToastController, 
-    private route: ActivatedRoute,
-    private router: Router,
-    ) {
-      this.route.queryParams.subscribe(params => {
-        const navigationExtras = this.router.getCurrentNavigation()?.extras;
-    if (navigationExtras && navigationExtras.state && 'user' in navigationExtras.state) {
-      this.user = navigationExtras.state['user'];
-        }
-      }); 
-   } 
+export class RecoveryPage implements OnInit {
+
+  nomUsuario = { texto: '' }
+  showSpinner: boolean = false; // Variable para controlar la visibilidad del spinner
+  mensaje: string = ''; // Variable para el mensaje
+
+  constructor(private router: Router, private apiService: ApiService) { }
 
   enviarSolicitud() {
-    if(this.validarEmail(this.email)) {
-    // mensaje de exito
-    this.mostrarMensaje('Solicitud enviada con éxito');
+    this.apiService.recovery(this.nomUsuario.texto).subscribe(
+      (response) => {
+        console.log(response);
+        if (response) {
+          // Activa el spinner
+          this.showSpinner = true;
+          this.mensaje = 'Solicitud enviada con éxito. Redirigiendo...'; // Establece el mensaje
 
-    // clear input
-    this.email = '';
-  } else {
-    this.mostrarMensaje('Ingrese un correo valido');
-  }
-}
-  async mostrarMensaje(mensaje: string) {
-    const toast = await this.toastController.create({
-      message: mensaje,
-      duration: 2000, // duracion de mensaje
-      position: 'top', // posicion de mensaje
-    });
-    toast.present();
-  }
-
-  validarEmail(email: string): boolean { //validar formato correo
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
+          // Simula un retraso de 3 segundos (esto se puede reemplazar con tu lógica real)
+          setTimeout(() => {
+            // Desactiva el spinner
+            this.showSpinner = false;
+            this.mensaje = ''; // Limpia el mensaje
+            // Redirige a la página de inicio de sesión (login)
+            this.router.navigate(['/login']);
+          }, 3000);
+        } else {
+          this.mensaje = 'Hubo un error al enviar la solicitud. Inténtalo de nuevo.';
+        }
+      });
   }
   
   ngOnInit() {
+  
   }
 
   login() {
-    this.router.navigate(['/login'])
-  }
+      this.router.navigate(['/login']);
+    }
 
 }

@@ -28,45 +28,45 @@ export class LoginPage implements OnInit {
         if (response) {
           this.IrAlHome()
         };
-});
+      });
   }
 
-verificarCredenciales(response: any): boolean {
-  return response.User === this.usuario.texto && response.password === this.password.texto;
-}
+  verificarCredenciales(response: any): boolean {
+    return response.User === this.usuario.texto && response.password === this.password.texto;
+  }
 
-bloquearBtn(): boolean {
-  return this.usuario.texto.length < 3 || this.password.texto.length != 4;
-}
+  bloquearBtn(): boolean {
+    return this.usuario.texto.length < 3 || this.password.texto.length != 4;
+  }
 
-IrAlHome() {
-  let navigationExtras: NavigationExtras = {
-    state: {
-      nombreUsuario: this.usuario.texto
+  IrAlHome() {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        nombreUsuario: this.usuario.texto
+      }
     }
+    this.router.navigate(['/home'], navigationExtras);
   }
-  this.router.navigate(['/home'], navigationExtras);
-}
 
-recovery() {
-  this.router.navigate(['/recovery'])
-}
-
-validarUsername(user: string): string | null {
-  if (user.length < 3 || user.length > 8) {
-    return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+  recovery() {
+    this.router.navigate(['/recovery'])
   }
-  return null;
-}
 
-validarPassword(pass: string): string | null {
-  if (pass.length !== 4) {
-    return 'La contraseña debe tener 4 caracteres.';
+  validarUsername(user: string): string | null {
+    if (user.length < 3 || user.length > 8) {
+      return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+    }
+    return null;
   }
-  return null;
-}
 
-ngOnInit() {
-}
+  validarPassword(pass: string): string | null {
+    if (pass.length !== 4) {
+      return 'La contraseña debe tener 4 caracteres.';
+    }
+    return null;
+  }
+
+  ngOnInit() {
+  }
 
 }
