@@ -33,10 +33,11 @@
           <a href="recovery()">¿Olvidaste tu contraseña?</a>
         </div>
 
-        <button mat-raised-button color="primary" (click)="login()" [disabled]="isLoading">
-          <span *ngIf="!isLoading">Ingresar</span>
-          <mat-spinner *ngIf="isLoading" diameter="50"></mat-spinner>
-        </button>
+        <ion-button (click)="login()" class="rounded-button">
+          Ingresar
+        </ion-button>
+
+        <mat-spinner *ngIf="isLoading" diameter="60"></mat-spinner>
       </ion-card-content>
     </ion-card>
   </div>
@@ -44,7 +45,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title>RegistrAPP</ion-title>
-    <ion-text>Derechos reservados de RegistrAPP &#169;</ion-text>
+    <ion-title class="center">RegistrAPP</ion-title>
+    <ion-text class="center">Derechos reservados de RegistrAPP &#169;</ion-text>
   </ion-toolbar>
 </ion-footer>

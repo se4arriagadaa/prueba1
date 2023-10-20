@@ -19,10 +19,9 @@
           <a href="login()">Regresar al login</a>
         </div>
 
-        <!-- Mostrar el mensaje -->
+        <!-- Mostrar mensaje -->
         <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
 
-        <!-- Aquí agregamos el spinner de Angular Material -->
         <mat-spinner *ngIf="showSpinner"></mat-spinner>
       </ion-card-content>
     </ion-card>
