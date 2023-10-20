@@ -15,58 +15,74 @@ export class LoginPage implements OnInit {
   private isLoggedIn: boolean = false;
   usuario = { texto: '' };
   password = { texto: '' };
-
+  isLoading = false;
 
   mostrarMensaje: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
   login() {
+    this.isLoading = true;
+
     this.apiService.buscarUsuario(this.usuario.texto, this.password.texto).subscribe(
       (response) => {
         console.log(response);
         if (response) {
-          this.IrAlHome()
-        };
-});
+          this.IrAlHome();
+        }else {
+          console.log('Credenciales incorrectas');
+        }
+      },
+      (error) => {
+        console.error('Error en la solicitud:', error);
+      },
+      () => {
+        this.isLoading = false; // Finaliza el estado de carga cuando la solicitud termina
+      }
+    );
   }
 
-verificarCredenciales(response: any): boolean {
-  return response.User === this.usuario.texto && response.password === this.password.texto;
-}
+  verificarCredenciales(response: any): boolean {
+    return response.User === this.usuario.texto && response.password === this.password.texto;
+  }
 
-bloquearBtn(): boolean {
-  return this.usuario.texto.length < 3 || this.password.texto.length != 4;
-}
+  bloquearBtn(): boolean {
+    return this.usuario.texto.length < 3 || this.password.texto.length != 4;
+  }
 
-IrAlHome() {
-  let navigationExtras: NavigationExtras = {
-    state: {
-      nombreUsuario: this.usuario.texto
+  IrAlHome() {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        nombreUsuario: this.usuario.texto
+      }
     }
+    this.router.navigate(['/home'], navigationExtras);
   }
-  this.router.navigate(['/home'], navigationExtras);
-}
 
-recovery() {
-  this.router.navigate(['/recovery'])
-}
-
-validarUsername(user: string): string | null {
-  if (user.length < 3 || user.length > 8) {
-    return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+  recovery() {
+    this.router.navigate(['/recovery'])
   }
-  return null;
-}
 
-validarPassword(pass: string): string | null {
-  if (pass.length !== 4) {
-    return 'La contraseña debe tener 4 caracteres.';
+  validarUsername(user: string): string | null {
+    if (user.length < 3 || user.length > 8) {
+      return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+    }
+    return null;
   }
-  return null;
-}
 
-ngOnInit() {
-}
+  validarPassword(pass: string): string | null {
+    if (pass.length !== 4) {
+      return 'La contraseña debe tener 4 caracteres.';
+    }
+    return null;
+  }
+
+  togglePasswordVisibility() {
+    this.hide = !this.hide;
+  }
+
+
+  ngOnInit() {
+  }
 
 }
