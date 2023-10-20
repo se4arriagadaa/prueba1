@@ -15,20 +15,31 @@ export class LoginPage implements OnInit {
   private isLoggedIn: boolean = false;
   usuario = { texto: '' };
   password = { texto: '' };
-
+  isLoading = false;
 
   mostrarMensaje: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
   login() {
+    this.isLoading = true;
+
     this.apiService.buscarUsuario(this.usuario.texto, this.password.texto).subscribe(
       (response) => {
         console.log(response);
         if (response) {
-          this.IrAlHome()
-        };
-      });
+          this.IrAlHome();
+        }else {
+          console.log('Credenciales incorrectas');
+        }
+      },
+      (error) => {
+        console.error('Error en la solicitud:', error);
+      },
+      () => {
+        this.isLoading = false; // Finaliza el estado de carga cuando la solicitud termina
+      }
+    );
   }
 
   verificarCredenciales(response: any): boolean {
@@ -65,6 +76,11 @@ export class LoginPage implements OnInit {
     }
     return null;
   }
+
+  togglePasswordVisibility() {
+    this.hide = !this.hide;
+  }
+
 
   ngOnInit() {
   }

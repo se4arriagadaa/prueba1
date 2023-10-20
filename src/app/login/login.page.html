@@ -1,30 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Login de RegistrAPP</ion-title>
+    <img alt="logo" class="center" width="60%" src="/assets/img/registrApp logo.png" />
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="contenido" color="primary">
+<ion-content [fullscreen]="true" class="contenido">
 
 
   <div id="container">
     <ion-card>
-      <img alt="logo" src="/assets/img/duoc_logo_2.png" width="100%" />
+
       <ion-card-header>
-        <ion-card-title>RegistrAPP</ion-card-title>
-        <ion-card-subtitle>Bienvenidos!</ion-card-subtitle>
+        <ion-card-title>Login</ion-card-title>
+        <ion-card-subtitle>Accede a tu cuenta</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-input [(ngModel)]="usuario.texto" label="usuario" labelPlacement="stacked"
-          placeholder="Ingrese usuario" maxlength="8" minlength="3"></ion-input>
-        <ion-input [(ngModel)]="password.texto" label="password" labelPlacement="stacked"
-          placeholder="Ingrese contraseña" type="password" maxlength="4" minlength="4"></ion-input>
+        <!-- Campo de Usuario -->
+        <mat-form-field class="full-width">
+          <mat-label>Nombre de Usuario</mat-label>
+          <input matInput [(ngModel)]="usuario.texto" required>
+        </mat-form-field>
+
+        <!-- Campo de Contraseña con Alternancia de Visibilidad -->
+        <mat-form-field class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [(ngModel)]="password.texto" [type]="hide ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon [ngClass]="{ 'eye-icon': !hide }">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
         <div class="ir_recovery">
           <a (click)="recovery()">¿Olvidaste tu contraseña?</a>
         </div>
-        <br>
-        <ion-button class="rounded-button" color="tertiary" (click)="login()" [disabled]="bloquearBtn()">Ingresar</ion-button>
+
+        <button mat-raised-button color="primary" (click)="login()" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Ingresar</span>
+          <mat-spinner *ngIf="isLoading" diameter="50"></mat-spinner>
+        </button>
       </ion-card-content>
     </ion-card>
   </div>
