@@ -25,7 +25,7 @@ export class RecoveryPage implements OnInit {
           this.showSpinner = true;
           this.mensaje = 'Solicitud enviada con éxito. Redirigiendo...'; // Establece el mensaje
 
-          // Simula un retraso de 3 segundos (esto se puede reemplazar con tu lógica real)
+          // Simula un retraso de 3 segundos
           setTimeout(() => {
             // Desactiva el spinner
             this.showSpinner = false;

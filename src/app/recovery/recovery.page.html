@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="contenido" color="primary">
+<ion-content [fullscreen]="true" class="contenido">
   <div id="container">
     <ion-card>
       <ion-card-header>
@@ -16,7 +16,7 @@
         <ion-input label="Usuario" labelPlacement="floating" [(ngModel)]="nomUsuario.texto"></ion-input>
         <ion-button class="rounded-button" (click)="enviarSolicitud()">Enviar Solicitud</ion-button>
         <div class="ir_login">
-          <ion-button class="rounded-button"><a (click)="login()">Regresar al login</a></ion-button>
+          <a href="login()">Regresar al login</a>
         </div>
 
         <!-- Mostrar el mensaje -->
