@@ -18,13 +18,13 @@
         <!-- Campo de Usuario -->
         <mat-form-field class="full-width">
           <mat-label>Nombre de Usuario</mat-label>
-          <input matInput [(ngModel)]="usuario.texto" required>
+          <input matInput [(ngModel)]="user.nombre" required>
         </mat-form-field>
 
         <!-- Campo de Contraseña con Alternancia de Visibilidad -->
         <mat-form-field class="full-width">
           <mat-label>Contraseña</mat-label>
-          <input matInput [(ngModel)]="password.texto" [type]="hide ? 'password' : 'text'" required>
+          <input matInput [(ngModel)]="user.password" [type]="hide ? 'password' : 'text'" required>
           <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
             <mat-icon [ngClass]="{ 'eye-icon': !hide }">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>

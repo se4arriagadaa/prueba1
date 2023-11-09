@@ -1,9 +1,2 @@
-/node_modules
-/.angular
-
-*.log
-* .tmp
-/coverage
 node_modules
-node_modules
-node_modules
+.angular

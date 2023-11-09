@@ -13,8 +13,10 @@ export class LoginPage implements OnInit {
 
   hide = true;
   private isLoggedIn: boolean = false;
-  usuario = { texto: '' };
-  password = { texto: '' };
+  user = {
+    nombre: '',
+    password: '',
+  }
   isLoading = false;
 
   mostrarMensaje: boolean = false;
@@ -24,12 +26,12 @@ export class LoginPage implements OnInit {
   login() {
     this.isLoading = true;
 
-    this.apiService.buscarUsuario(this.usuario.texto, this.password.texto).subscribe(
+    this.apiService.buscarUsuario(this.user.nombre, this.user.password).subscribe(
       (response) => {
-        console.log(response);
-        if (response) {
+        if (this.verificarCredenciales(response)) {
+          localStorage.setItem('ingresado', 'true');
           this.IrAlHome();
-        }else {
+        } else {
           console.log('Credenciales incorrectas');
         }
       },
@@ -43,17 +45,18 @@ export class LoginPage implements OnInit {
   }
 
   verificarCredenciales(response: any): boolean {
-    return response.User === this.usuario.texto && response.password === this.password.texto;
+    return response.User === this.user.nombre && response.password === this.user.password;
   }
 
   bloquearBtn(): boolean {
-    return this.usuario.texto.length < 3 || this.password.texto.length != 4;
+    return this.user.nombre.length < 3 || this.user.password.length != 4;
   }
 
-  IrAlHome() {
+  async IrAlHome() {
+
     let navigationExtras: NavigationExtras = {
       state: {
-        nombreUsuario: this.usuario.texto
+        nombreUsuario: this.user.nombre
       }
     }
     this.router.navigate(['/home'], navigationExtras);
